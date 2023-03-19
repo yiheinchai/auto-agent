@@ -1,9 +1,9 @@
 """
 PROMPT:
-Write a python class which has a method called execute code which takes an output from an LLM. 
+Write a python class called AutonomousLLM which has a method called execute code which takes an output from an LLM. 
 If the output from the LLM contains instruction to add or modify a method to class, take the code from the LLM and add/modify the method to the class. 
 If the output from the LLM contains instruction to execute the code contained within the output, then execute the code. 
-Add another method which enables the class to interface with the ChatGPT API.
+Add another method which enables the class to interface with the ChatGPT API. Whenever this method is called, ensure to pass the output into the execute code method.
 """
 
 class AutonomousLLM:
@@ -29,4 +29,5 @@ class AutonomousLLM:
             print("Invalid output.")
 
     def interface_chatgpt(self, input):
-        return self.chatgpt.get_response(input)
+        response = self.chatgpt.get_response(input)
+        return execute_code(response)
