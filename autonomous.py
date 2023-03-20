@@ -45,11 +45,11 @@ class AutonomousLLM:
 
             if add_method_match:
                 method_name, method_code = add_method_match.groups()
-                self.methods[method_name] = method_code
+                setattr(self, method_name, method_code)
                 print(f"Method {method_name} added to object.")
             elif modify_method_match:
                 method_name, method_code = modify_method_match.groups()
-                self.methods[method_name] = method_code
+                setattr(self, method_name, method_code)
                 print(f"Method {method_name} modified in object.")
             elif execute_code_match:
                 code = execute_code_match.group(1)
@@ -65,32 +65,4 @@ class AutonomousLLM:
         return execute_code(response)
 
 autonomous_llm = AutonomousLLM(prompt=PROMPT)
-
-import openai
-
-class LLMRecursiveCaller:
-    def __init__(self, api_key, prompt, engine="davinci"):
-        self.api_key = api_key
-        self.prompt = prompt
-        self.engine = engine
-        self.completion = openai.Completion(api_key=api_key, engine=engine)
-
-    def generate_output(self, prompt):
-        response = self.completion.create(prompt=prompt, max_tokens=1024, n=1,stop=None,temperature=0.5)
-        output = response.choices[0].text.strip()
-        return output
-
-    def call_recursive(self):
-        output = self.generate_output(self.prompt)
-        new_call = LLMRecursiveCaller(self.api_key, output, self.engine)
-        if output:
-            return output + "\n" + new_call.call_recursive()
-        else:
-            return ""
-
-api_key = "YOUR_API_KEY"
-prompt = "Write a Python function that calls itself recursively."
-recursive_caller = LLMRecursiveCaller(api_key, prompt)
-output = recursive_caller.call_recursive()
-print(output)
 
