@@ -29,9 +29,12 @@ AutonomousLLM is designed to be used through a command line interface. To intera
 Keep in mind that all commands must be formatted correctly in your output to be executed properly by the AutonomousLLM.
 """
 
+import openai
+
 class AutonomousLLM:
     def __init__(self):
-        self.chatgpt = ChatGPT(prompt=prompt)
+        self.api_key = "your_openai_api_key"
+        openai.api_key = self.api_key
 
     def execute_code(self, output):
         add_method_pattern = r"add method (\w+) to class:\n([\s\S]+)"
@@ -61,8 +64,16 @@ class AutonomousLLM:
             print(f"Error: {e}")
 
     def interface_chatgpt(self, input):
-        response = self.chatgpt.get_response(input)
-        return execute_code(response)
+        response = openai.Completion.create(
+            engine="text-davinci-002",
+            prompt=PROMPT + input,
+            max_tokens=150,
+            n=1,
+            stop=None,
+            temperature=0.5,
+        )
+        output = response.choices[0].text.strip()
+        return self.execute_code(output)
 
-autonomous_llm = AutonomousLLM(prompt=PROMPT)
+autonomous_llm = AutonomousLLM()
 
