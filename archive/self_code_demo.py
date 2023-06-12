@@ -1,6 +1,6 @@
 # Importing requests library
 import random
-
+import os
 import openai
 
 
@@ -8,7 +8,7 @@ import openai
 class AutonomousLLM:
     # Initializing the object with an OpenAI API key and a code attribute
     def __init__(self):
-        self.api_key = "YOUR API KEY"
+        self.api_key = os.environ.get("OPENAI_API_KEY")
         self.code = None
         self.prompt = None
     

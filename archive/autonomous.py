@@ -31,6 +31,7 @@ Keep in mind that all commands must be formatted correctly in your output to be 
 
 import openai
 
+
 class AutonomousLLM:
     def __init__(self):
         self.api_key = "your_openai_api_key"
@@ -76,4 +77,3 @@ class AutonomousLLM:
         return self.execute_code(output)
 
 autonomous_llm = AutonomousLLM()
-
