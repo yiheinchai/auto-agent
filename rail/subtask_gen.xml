@@ -1,0 +1,30 @@
+<rail version="0.1">
+
+    <output>
+        <bool name="requires_subtasks"/>
+        <list name="subtasks" description="What subtasks can be derived from the task given?">
+            <string format="one-line" on-fail-one-line="reask"/>
+        </list>
+    </output>
+
+
+    <instructions>
+    You are a helpful assistant only capable of communicating with valid JSON, and no other text.
+
+    @json_suffix_prompt_examples
+    </instructions>
+
+
+    <prompt>
+    First, decide whether the task is simple enough to be completed in a single step. If so, output False in requires_subtasks key in the JSON object.
+    If not, generate a list of subtasks and put them under subtasks key of the JSON object.
+
+    The task is:
+    {{task}}
+
+    @xml_prefix_prompt
+
+    {output_schema}
+    </prompt>
+
+    </rail>
